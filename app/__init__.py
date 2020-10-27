@@ -3,7 +3,7 @@
 from flask import Flask, jsonify
 from datetime import timedelta
 from flask_bcrypt import Bcrypt
-from .utils.decorators import session_required, public_page
+from .utils.decorators import session_required, private_request
 from .utils.request import get_login_user
 from .utils import const as CONST, json_encoder
 from flask_sqlalchemy import SQLAlchemy
@@ -27,16 +27,20 @@ def shutdown_session(exception=None):
     As in the declarative approach, you need to close the session after each
     request or application context shutdown.
 
-    :param exception:
     :return:
     """
     db.session.remove()
 
 
 @app.route(CONST.URL_INDEX, methods=["GET"])
-@public_page
+@private_request
 def index():
-    return jsonify(success=True, message="/index"), 200
+    return jsonify(success=True, message="/"), 200
+
+
+@app.errorhandler(401)
+def page_unauthorized(e):
+    return jsonify(success=False, message="401 Unauthorized: Why are you here?"), 401
 
 
 @app.errorhandler(404)

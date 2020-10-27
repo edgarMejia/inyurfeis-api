@@ -14,12 +14,12 @@ def get_all():
         if clients:
             for client in clients:
                 data.append(
-                    {
-                        "id": client.id,
-                        "full_name": client.full_name,
-                        "auth_token": client.auth_token,
-                        "created_at": client.created_at
-                    }
+                    dict(
+                        id=client.id,
+                        full_name=client.full_name,
+                        auth_token=client.auth_token,
+                        created_at=client.created_at
+                    )
                 )
 
         return jsonify(success=True, message="clients", data=data), 200
@@ -45,7 +45,6 @@ def save():
     try:
         db.session.add(client)
         db.session.commit()
-
         return jsonify(success=True, message="Client added"), 200
     except Exception as e:
         return jsonify(

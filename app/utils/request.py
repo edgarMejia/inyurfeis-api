@@ -1,15 +1,6 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 from flask.globals import request, session
-import requests
-
-
-def make():
-    def get(url="", headers=""):
-        return requests.get(url, headers=headers)
-
-    def post(url="", headers=""):
-        return requests.post(url, headers=headers)
 
 
 def get_str(name):
