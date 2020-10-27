@@ -1,11 +1,11 @@
 from flask import request, jsonify
 from app import app, db
-from app.utils.decorators import public_page
+from app.utils.decorators import private_request
 from app.models.client import Client
 
 
 @app.route("/api/client/all", methods=["GET"])
-@public_page
+@private_request
 def get_all():
     data = []
 
@@ -32,7 +32,7 @@ def get_all():
 
 
 @app.route("/api/client/save", methods=["POST"])
-@public_page
+@private_request
 def save():
     try:
         content = request.get_json()

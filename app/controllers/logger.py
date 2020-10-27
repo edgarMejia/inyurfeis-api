@@ -1,11 +1,11 @@
 from flask import request, jsonify
 from app import app, db
-from app.utils.decorators import public_page
+from app.utils.decorators import private_request
 from app.models.logger import Logger
 
 
 @app.route("/api/logger/save", methods=["POST"])
-@public_page
+@private_request
 def logger_save():
     try:
         content = request.get_json()
