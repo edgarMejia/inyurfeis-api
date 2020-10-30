@@ -1,5 +1,4 @@
 import os
-from app.utils import const as CONST
 
 
 class Config(object):

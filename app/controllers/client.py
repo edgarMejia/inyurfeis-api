@@ -26,7 +26,7 @@ def get_all():
     except Exception as e:
         return jsonify(
             success=True,
-            message="ERROR get all clients: " + str(e),
+            message=f"ERROR get all clients: ${str(e)}",
             data=data
         ), 400
 
@@ -49,6 +49,6 @@ def save():
     except Exception as e:
         return jsonify(
             success=False,
-            message="Error while adding new client: " + str(e),
+            message=f"Error while adding new client: ${str(e)}",
             data=None
         ), 400
