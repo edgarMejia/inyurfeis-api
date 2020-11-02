@@ -1,6 +1,6 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
-from flask import Flask, jsonify
+from flask import Flask
 from datetime import timedelta
 from flask_bcrypt import Bcrypt
 from .utils.decorators import session_required, private_request
@@ -10,14 +10,11 @@ from flask_sqlalchemy import SQLAlchemy
 
 
 app = Flask(__name__)
-
-"""Cambiar a CONST.PRODUCTION para cargar la configuración de producción"""
 app.config.from_object(CONST.DEVELOPMENT)
 app.json_encoder = json_encoder.JSONEncoder
 
 bcrypt = Bcrypt(app)
 app.permanent_session_lifetime = timedelta(hours=CONST.SESSION_LIFETIME_IN_HOURS)
-
 db = SQLAlchemy(app)
 
 
@@ -32,24 +29,9 @@ def shutdown_session(exception=None):
     db.session.remove()
 
 
-@app.route(CONST.URL_INDEX, methods=["GET"])
-@private_request
-def index():
-    return jsonify(success=True, message="/"), 200
-
-
-@app.errorhandler(401)
-def page_unauthorized(e):
-    return jsonify(success=False, message="401 Unauthorized: Why are you here?"), 401
-
-
-@app.errorhandler(404)
-def page_not_found(e):
-    return jsonify(success=False, message="404 Not found"), 404
-
-
 """
 Es necesario importar aquí para poder acceder a las rutas desde otros modulos
 """
-from . import controllers
-from . import models
+# from . import routes
+# from . import controllers
+# from . import models
